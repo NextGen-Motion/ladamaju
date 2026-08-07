@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXT GEN - Moving & Junk Removal</title>
+<style>
+  :root {
+    --green: #7ED321;
+    --green-dark: #63b81a;
+    --black: #0b0f14;
+    --white: #ffffff;
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.14);
+    --radius: 20px;
+    --footer-next: #ffffff;
+    --footer-gen: var(--green);
+    --silver: #c0c0c0;
+  }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Inter, Arial, sans-serif; }
+  html { scroll-behavior: smooth; }
+  body {
+    color: var(--text);
+    background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 45%, #eef2f7 100%);
+    line-height: 1.6;
+  }
+  ::selection { background: rgba(126, 211, 33, 0.25); color: #111827; }
+
+  @keyframes headerDrop {
+    from { transform: translateY(-16px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); }
+    50% { box-shadow: 0 10px 30px rgba(126, 211, 33, 0.22); }
+  }
+  @keyframes sparkleTwinkle {
+    0%, 100% { opacity: 0.2; filter: blur(0px); }
+    50% { opacity: 1; filter: blur(0.3px); }
+  }
+
+  header {
+    background: rgba(11, 15, 20, 0.92);
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 8%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    animation: headerDrop 0.7s ease both;
+    overflow: hidden;
+  }
+  header::before,
+  header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.95) 0 1px, transparent 1.5px),
+      radial-gradient(circle, rgba(126,211,33,0.9) 0 1px, transparent 1.5px);
+    background-size: 120px 120px, 180px 180px;
+    opacity: 0.25;
+    animation: sparkleTwinkle 2.8s ease-in-out infinite;
+  }
+  header:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); animation: glowPulse 1.8s ease-in-out infinite; }
+
+  .logo {
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    transition: 0.25s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .logo:hover { transform: translateY(-2px) scale(1.04); }
+  .logo span { color: var(--green); }
+  nav { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+  nav a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--green);
+    transition: 0.25s ease;
+  }
+  nav a:hover::after, nav a.active::after { width: 100%; }
+  nav a:hover, nav a.active { color: var(--green); transform: translateY(-2px); }
+
+  .btn,.btn-outline {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s ease;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+  .btn {
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    color: #101418;
+    box-shadow: 0 10px 20px rgba(126, 211, 33, 0.25);
+  }
+  .btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 14px 26px rgba(126, 211, 33, 0.3);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(255,255,255,0.55);
+    color: var(--white);
+    margin-left: 10px;
+  }
+  .btn-outline:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(126, 211, 33, 0.08);
+  }
+
+  .hero {
+    min-height: 88vh;
+    background: linear-gradient(90deg, rgba(11,15,20,0.92) 0%, rgba(11,15,20,0.72) 55%, rgba(11,15,20,0.55) 100%), #0b0f14;
+    color: var(--white);
+    padding: 90px 8%;
+    display: flex;
+    align-items: center;
+  }
+  .hero-content { max-width: 720px; }
+  .eyebrow {
+    display: inline-block;
+    color: var(--green);
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border: 1px solid rgba(126, 211, 33, 0.25);
+    border-radius: 999px;
+    background: rgba(126, 211, 33, 0.08);
+  }
+  .hero h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.05; margin-bottom: 18px; letter-spacing: -1px; }
+  .hero h1 span { color: var(--green); text-shadow: 0 0 18px rgba(126, 211, 33, 0.18); }
+  .hero p { color: rgba(255,255,255,0.82); max-width: 620px; font-size: 17px; margin-bottom: 28px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .section { padding: 78px 8%; }
+  .section-title { text-align: center; max-width: 760px; margin: 0 auto 34px; }
+  .section-title h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 10px; color: #111827; }
+  .section-title p { color: var(--muted); font-size: 16px; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 26px;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    transition: 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(126, 211, 33, 0.35);
+    box-shadow: var(--shadow-lg);
+  }
+  .card .icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: rgba(126, 211, 33, 0.12);
+    color: var(--green-dark);
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .card h3 { margin-bottom: 10px; font-size: 20px; color: #111827; }
+  .card p { color: var(--muted); margin-bottom: 16px; min-height: 54px; }
+  .card a { color: var(--green-dark); text-decoration: none; font-weight: 700; }
+
+  .about {
+    background: linear-gradient(180deg, #0b0f14 0%, #111827 100%);
+    color: var(--white);
+  }
+  .about-wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 30px; align-items: center; }
+  .about-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+  }
+  .about h2 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 22px; }
+  .stat {
+    background: rgba(255,255,255,0.06);
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .reviews { background: var(--bg); }
+  .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; }
+  .review {
+    background: var(--card);
+    padding: 24px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    color: var(--text);
+    transition: 0.25s ease;
+  }
+  .review:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .review strong { display: inline-block; margin-bottom: 10px; }
+  .stars { color: #f59e0b; letter-spacing: 1px; }
+
+  .form-shell {
+    max-width: 720px;
+    margin: 34px auto 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-shell input,.form-shell textarea,.form-shell select,
+  .quote-form input,.quote-form select,.quote-form textarea {
+    width: 100%;
+    margin: 8px 0 0;
+    padding: 13px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    background: #fff;
+    font-size: 14px;
+  }
+  .form-shell input:focus,.form-shell textarea:focus,.form-shell select:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(126, 211, 33, 0.12);
+  }
+
+  .quote-form {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 28px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .contact-item { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+  .contact-item a { color: rgba(255,255,255,0.72); text-decoration: none; }
+  .contact-item a:hover { color: var(--green); }
+
+  footer {
+    background: #0b0f14;
+    color: var(--white);
+    padding: 48px 8%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+  footer h4 { margin-bottom: 12px; font-size: 16px; }
+  footer p, footer a { color: rgba(255,255,255,0.72); text-decoration: none; display: block; margin: 6px 0; font-size: 14px; }
+  footer a:hover { color: var(--green); }
+  .footer-brand .next { color: var(--footer-next); }
+  .footer-brand .gen { color: var(--footer-gen); }
+  .trademark {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(192,192,192,0.18), rgba(255,255,255,0.06));
+    border: 1px solid rgba(192,192,192,0.35);
+    color: var(--silver);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1100px) {
+    .services-grid,.review-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-wrap { grid-template-columns: 1fr; }
+    footer { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    header { flex-direction: column; gap: 14px; padding: 14px 5%; }
+    .services-grid,.review-grid, footer,.form-grid,.stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NEXT <span>GEN</span></div>
+  <nav>
+    <a href="#" class="active">HOME</a>
+    <a href="#services">SERVICES</a>
+    <a href="#about">ABOUT US</a>
+    <a href="#quote">PRICING</a>
+    <a href="#reviews">REVIEWS</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <a href="https://wa.me/27716464690" class="btn" target="_blank" rel="noopener">WHATSAPP</a>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">Fast. Reliable. Next Gen.</div>
+    <h1>MOVING YOU TO THE <span>NEXT GENERATION.</span></h1>
+    <p>Next Gen Moving offers reliable, affordable moving services with safe, stress free transport you can trust.</p>
+    <div class="hero-actions">
+      <button class="btn" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">BOOK NOW →</button>
+      <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">SERVICES</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-title"><h2>Our Services</h2><p>Reliable help for moving, junk removal, and cleanouts with fast response times and trusted support.</p></div>
+  <div class="services-grid">
+    <div class="card"><div class="icon">🚚</div><h3>Furniture Moving.</h3><a href="#quote">Get Quote</a></div>
+    <div class="card"><div class="icon">🧰</div><h3>Appliance delivery & installation.</h3><a href="#quote">Get Quote</a></div>
+    <div class="card"><div class="icon">🏠</div><h3>Office & home Relocations.</h3><a href="#quote">Get Quote</a></div>
+    <div class="card"><div class="icon">📦</div><h3>Packing & Unboxing Assistance.</h3><a href="#quote">Get Quote</a></div>
+    <div class="card"><div class="icon">🎓</div><h3>Helps uni students with moving needs.</h3><a href="#quote">Get Quote</a></div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="about-wrap">
+    <div><div class="eyebrow">About Next Gen</div><h2>Built for efficient, professional service.</h2><p>Next Gen Moving provides reliable, affordable moving services for homes, apartments, students, and businesses. We make every move safe, simple, and stress-free with professional service you can trust.</p></div>
+    <div class="about-box"><div class="stats"><div class="stat">✓ Fast response times</div><div class="stat">✓ Friendly service</div><div class="stat">✓ Affordable pricing</div><div class="stat">✓ Clean, professional work</div></div></div>
+  </div>
+</section>
+
+<section class="section reviews" id="reviews">
+  <div class="section-title"><h2>Customer Reviews</h2><p>Real feedback from customers who trusted Next Gen.</p></div>
+  <div class="review-grid" id="reviewGrid"><div class="review">Loading reviews...</div></div>
+  <form class="form-shell" id="reviewForm">
+    <h3>Leave a Review</h3><p>Your review will be saved and shown on the page.</p>
+    <div class="form-grid">
+      <input type="text" id="reviewName" placeholder="Your name" required>
+      <select id="reviewRating" required><option value="5">5 - Excellent</option><option value="4">4 - Good</option><option value="3">3 - Average</option><option value="2">2 - Poor</option><option value="1">1 - Bad</option></select>
+    </div>
+    <textarea id="reviewMessage" rows="4" placeholder="Write your review" required></textarea>
+    <div class="form-actions"><button class="btn" type="submit">Submit Review</button></div>
+    <p id="reviewStatus" style="margin-top:10px;"></p>
+  </form>
+</section>
+
+<section class="section" id="quote">
+  <div class="section-title"><h2>Request a Quote</h2><p>Send your service details and we will contact you.</p></div>
+  <form class="quote-form" id="quoteForm" action="https://formspree.io/f/xyegkgzn" method="POST">
+    <input type="text" name="name" placeholder="Your name" required>
+    <input type="email" name="email" placeholder="Email address" required>
+    <input type="tel" name="phone" placeholder="Phone number" required>
+    <select name="service" required>
+      <option value="">Select service</option>
+      <option value="moving">Moving</option>
+      <option value="junk-removal">Appliance delivery</option>
+      <option value="cleanout">Assist in packing</option>
+    </select>
+    <textarea name="details" rows="4" placeholder="Project details" required></textarea>
+    <input type="hidden" name="_subject" value="New Quote Request - Next Gen Moving">
+    <input type="hidden" name="_replyto" value="email">
+    <button class="btn" type="submit">Submit Quote Request</button>
+  </form>
+  <p id="responseMessage" style="margin-top:15px; text-align:center;"></p>
+</section>
+
+<footer id="contact">
+  <div class="footer-brand"><h4><span class="next">NEXT</span> <span class="gen">GEN</span></h4><p>Moving & junk removal made simple.</p></div>
+  <div><h4>Links</h4><a href="#services">Services</a><a href="#about">About</a><a href="#quote">Quote</a><a href="#reviews">Reviews</a></div>
+  <div>
+    <h4>Contact Us</h4>
+    <div class="contact-item">
+      <img src="call.webp" width="20" height="20" alt="Call">
+      <a href="tel:0716464690">071 646 4690</a>
+    </div>
+    <div class="contact-item">
+      <img src="instagram.webp" width="20" height="20" alt="Instagram">
+      <a href="https://instagram.com/NextGenMotion" target="_blank">@nextgenmotion</a>
+    </div>
+    <div class="contact-item">
+      <img src="tiktok.webp" width="20" height="20" alt="TikTok">
+      <a href="https://tiktok.com/@Next_Gen_Motion" target="_blank">Next_Gen_Motion</a>
+    </div>
+    <div class="contact-item">
+      <img src="facebook.jpg" width="20" height="20" alt="Facebook">NextGenMotion
+    </div>
+    <div class="contact-item">
+      <img src="gmail.webp" width="20" height="20" alt="Email">
+      <a href="mailto:next.gen.motion3@gmail.com">next.gen.motion3@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <img src="location.webp" width="20" height="20" alt="Location">
+      <span>Cape Town</span>
+    </div>
+  </div>
+  <div><h4>Hours</h4><p>Operates 24/7</p></div>
+  <div class="trademark">™ <span>Odwa Mqikela</span></div>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDzDGDTBkQohUnhCYgk0pAnbgErHG0zRrM",
+  authDomain: "nextgen-moving-677b6.firebaseapp.com",
+  projectId: "nextgen-moving-677b6",
+  storageBucket: "nextgen-moving-677b6.firebasestorage.app",
+  messagingSenderId: "957138603739",
+  appId: "1:957138603739:web:b8754a6ac11b40f101c6fe"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const reviewsRef = collection(db, "reviews");
+
+function renderReviews(items) {
+  const grid = document.getElementById('reviewGrid');
+  if(items.length === 0) {
+    grid.innerHTML = `<div class="review">No reviews yet. Be the first to leave one!</div>`;
+    return;
+  }
+  grid.innerHTML = '';
+  items.forEach((r) => {
+    const rating = Math.max(1, Math.min(5, Number(r.rating) || 5));
+    const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    grid.innerHTML += `<div class="review"><strong>${r.name || 'Anonymous'}</strong><br><div class="stars">${stars}</div><br>${r.message || ''}</div>`;
+  });
+}
+
+async function loadReviews() {
+  const grid = document.getElementById('reviewGrid');
+  grid.innerHTML = `<div class="review">Loading reviews...</div>`;
+  try {
+    const q = query(reviewsRef, orderBy("date", "desc"), limit(6));
+    const querySnapshot = await getDocs(q);
+
+    const items = [];
+    querySnapshot.forEach((doc) => items.push(doc.data()));
+    renderReviews(items);
+  } catch (err) {
+    console.error(err);
+    grid.innerHTML = `<div class="review" style="color:red;">Error loading reviews. Check Firebase Rules.</div>`;
+  }
+}
+
+document.getElementById('reviewForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const status = document.getElementById('reviewStatus');
+  status.style.color = "#000";
+  status.textContent = "Submitting...";
+  try {
+    await addDoc(reviewsRef, {
+      name: document.getElementById('reviewName').value.trim(),
+      rating: Number(document.getElementById('reviewRating').value),
+      message: document.getElementById('reviewMessage').value.trim(),
+      date: serverTimestamp()
+    });
+    status.style.color = "green";
+    status.textContent = "✅ Review submitted!";
+    this.reset();
+    setTimeout(loadReviews, 1000);
+  } catch (err) {
+    status.style.color = "red";
+    status.textContent = "❌ Could not submit review: " + err.message;
+  }
+});
+
+document.getElementById('quoteForm').addEventListener('submit', function () {
+  const email = this.querySelector('input[name="email"]').value;
+  this.querySelector('input[name="_replyto"]').value = email;
+});
+
+loadReviews();
+</script>
+
+</body>
+</html>
